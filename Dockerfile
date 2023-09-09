@@ -14,7 +14,7 @@ COPY . .
 
 RUN npm run build
 
-FROM nodejs:18
+FROM node:18
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
