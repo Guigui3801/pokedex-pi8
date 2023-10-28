@@ -39,6 +39,30 @@ export class PokemonService {
       });
     }
   }
+  async getRandomPokemon(): Promise<Pokemon | null> {
+    const randomPokemon = Math.floor(Math.random() * 150) + 1;
+    try {
+      return await this.prisma.pokemon.findFirstOrThrow({
+        where: {
+          id: randomPokemon
+        },
+        include: {
+          types: {
+            select: {
+              name: true
+            }
+          }
+        }
+      })
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.NOT_FOUND,
+        error: 'Pokemon não encontrado',
+      }, HttpStatus.NOT_FOUND, {
+        cause: error
+      });
+    }
+  }
 
   async createPokemon(id: number): Promise<Pokemon> {
     const response = await axios.get<PokemonProps>(`https://pokeapi.co/api/v2/pokemon/${id}`)

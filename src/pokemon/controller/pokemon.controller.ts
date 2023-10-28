@@ -7,8 +7,8 @@ export class PokemonController {
     constructor(private readonly pokemon: PokemonService) { }
 
     @Get()
-    async getAllPokemon(): Promise<Pokemon[]> {
-        return this.pokemon.getAllPokemon();
+    async getAllPokemon(): Promise<Pokemon> {
+        return this.pokemon.getRandomPokemon();
     }
 
     @Get('/:id')
